@@ -1,4 +1,3 @@
-
 /* 
 Requirements:
 This program should be built in a brand new class called CarRentalService
@@ -9,14 +8,12 @@ The list of available cars should not output any currently rented cars
 The program should cycle until all cars have been rented, at which point you have two choices: 
 end the program, or reset the data.
 */
-
 const readline = require('readline');
 const internal = require('stream');
 const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
 });
-
 
 rentalCar = {
     myCompany : "rentMyCars",
@@ -44,13 +41,13 @@ rentalCar = {
 function mainMenu() {
     console.log ("_________________________________________\nHello and welcome to " + rentalCar.myCompany)
     const selection = rl.question ("how may we help you today?\n 1. Rent a car\n 2. Return a car\n 3. Exit\n =>", (answer) =>{
-        if (answer == 1){
+        if (answer == 1) {
             console.log("_________________________________________\nYou chose to rent a car")
             carChoice()
-        } else if (answer == 2){
+        } else if (answer == 2) {
             console.log("_________________________________________\nYou chose to return a car")
             returnScreen()
-        } else if (answer == 3){
+        } else if (answer == 3) {
             console.log("_________________________________________\nYou chose to exit, have a great day!")
             rl.close()
         } else {
@@ -61,21 +58,21 @@ function mainMenu() {
 }
 
 function carChoice() {
-    for (let i = 0; i < rentalCar.cars.length; i++){
+    for (let i = 0; i < rentalCar.cars.length; i++) {
         const car = rentalCar.cars[i].model
         console.log ((i + 1) + ". " + car)
     }
 
-    const selection = rl.question ("What car would you like to rent?\n=>", (answer) =>{
-        if (answer == 1){
+    const selection = rl.question ("What car would you like to rent?\n=>", (answer) => {
+        if (answer == 1) {
             console.log("_________________________________________\nYou chose to rent " + rentalCar.cars[0].model)
             rentalCar.carsRented.push (rentalCar.cars[0])
             totalCost()
-        } else if (answer == 2){
+        } else if (answer == 2) {
             console.log("_________________________________________\nYou chose to rent " + rentalCar.cars[1].model)
             rentalCar.carsRented.push (rentalCar.cars[1])
             totalCost()
-        } else if (answer == 3){
+        } else if (answer == 3) {
             console.log("_________________________________________\nYou chose to rent " + rentalCar.cars[2].model)
             rentalCar.carsRented.push (rentalCar.cars[2])
             totalCost()
@@ -85,10 +82,11 @@ function carChoice() {
         }
     })
 }
+
 function totalCost() { 
-    const selection = rl.question ("How many days would you like to rent?\n=> ", (answer) =>{
-        if(parseInt(answer) > 0){
-            for (let i = 0; i < rentalCar.carsRented.length; i++){ 
+    const selection = rl.question ("How many days would you like to rent?\n=> ", (answer) => {
+        if(parseInt(answer) > 0) {
+            for (let i = 0; i < rentalCar.carsRented.length; i++) { 
                 rentalCar.cars[i].days = parseInt(answer)
                 const costs = rentalCar.carsRented[i].days * rentalCar.carsRented[i].price
                 rentalCar.totalCost += costs
@@ -107,8 +105,8 @@ function returnScreen() {
     for (let i = 0; i < rentalCar.carsRented.length; i++){ 
         console.log((i+1) + ". " + rentalCar.carsRented[i].model)
     } 
-    const selection = rl.question ("What car would you like to return?\n=> ", (answer) =>{
-        if (answer  > rentalCar.carsRented.length || answer < 0){
+    const selection = rl.question ("What car would you like to return?\n=> ", (answer) => {
+        if (answer  > rentalCar.carsRented.length || answer < 0) {
             console.log("incorrect selection try again")
             mainMenu()
         } else {
