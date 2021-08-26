@@ -1,3 +1,4 @@
+
 /* 
 Requirements:
 This program should be built in a brand new class called CarRentalService
@@ -16,19 +17,6 @@ const rl = readline.createInterface({
     output: process.stdout
 });
 
-//Set up new class ( I tried but it did not work after a while but I will go back to it)
-/*
-class CarRentalService {
-    constructor (model, price, days) {
-
-        this.model = model
-        this.price = price
-        this.days = 0
-        
-        
-    }
-}
-*/
 
 rentalCar = {
     myCompany : "rentMyCars",
@@ -61,6 +49,7 @@ function mainMenu() {
             carChoice()
         } else if (answer == 2){
             console.log("_________________________________________\nYou chose to return a car")
+            returnScreen()
         } else if (answer == 3){
             console.log("_________________________________________\nYou chose to exit, have a great day!")
             rl.close()
@@ -77,18 +66,18 @@ function carChoice() {
         console.log ((i + 1) + ". " + car)
     }
 
-    const selection = rl.question ("What car would you like to rent?", (answer) =>{
+    const selection = rl.question ("What car would you like to rent?\n=>", (answer) =>{
         if (answer == 1){
             console.log("_________________________________________\nYou chose to rent " + rentalCar.cars[0].model)
-            rentalCar.carsRented.push (rentalCar.cars[0].price)
+            rentalCar.carsRented.push (rentalCar.cars[0])
             totalCost()
         } else if (answer == 2){
             console.log("_________________________________________\nYou chose to rent " + rentalCar.cars[1].model)
-            rentalCar.carsRented.push (rentalCar.cars[1].price)
+            rentalCar.carsRented.push (rentalCar.cars[1])
             totalCost()
         } else if (answer == 3){
             console.log("_________________________________________\nYou chose to rent " + rentalCar.cars[2].model)
-            rentalCar.carsRented.push (rentalCar.cars[2].price)
+            rentalCar.carsRented.push (rentalCar.cars[2])
             totalCost()
         } else {
             console.log("_________________________________________\nInvalid choice")
@@ -98,13 +87,13 @@ function carChoice() {
 }
 function totalCost() { 
     const selection = rl.question ("How many days would you like to rent?\n=> ", (answer) =>{
-        if(Number.isInteger(answer) <= 7){
+        if(parseInt(answer) > 0){
             for (let i = 0; i < rentalCar.carsRented.length; i++){ 
-                rentalCar.cars[i].days = Number.answer
+                rentalCar.cars[i].days = parseInt(answer)
                 const costs = rentalCar.carsRented[i].days * rentalCar.carsRented[i].price
                 rentalCar.totalCost += costs
             } 
-            console.log(Number.answer * rentalCar.carsRented[0].price)
+            console.log("Your total cost for rent is : $" + parseInt(answer) * rentalCar.carsRented[0].price)
             mainMenu()
         } else {
             console.log("Invalid answer")
@@ -114,6 +103,19 @@ function totalCost() {
 }
 
 function returnScreen() { 
+    console.log ("_________________________________________\nYou have chosen to return a car " + rentalCar.myCompany)
+    for (let i = 0; i < rentalCar.carsRented.length; i++){ 
+        console.log((i+1) + ". " + rentalCar.carsRented[i].model)
+    } 
+    const selection = rl.question ("What car would you like to return?\n=> ", (answer) =>{
+        if (answer  > rentalCar.carsRented.length || answer < 0){
+            console.log("incorrect selection try again")
+            mainMenu()
+        } else {
+            rentalCar.carsRented.splice(answer - 1, 1)
+            mainMenu()
+        }
+    })
 }
 
 mainMenu()
