@@ -52,10 +52,11 @@ function mainMenu() {
             rl.close()
         } else {
             console.log("_________________________________________\nInvalid Input")
-            rl.close()
+            mainMenu()
         }
     })
 }
+//////have cars move locations and rename locations for clarity//////////////////////////////
 
 function carChoice() {
     for (let i = 0; i < rentalCar.cars.length; i++) {
@@ -66,15 +67,15 @@ function carChoice() {
     const selection = rl.question ("What car would you like to rent?\n=>", (answer) => {
         if (answer == 1) {
             console.log("_________________________________________\nYou chose to rent " + rentalCar.cars[0].model)
-            rentalCar.carsRented.push (rentalCar.cars[0])
+            rentalCar.carsRented.push(rentalCar.cars.shift(rentalCar.cars[0]))
             totalCost()
         } else if (answer == 2) {
             console.log("_________________________________________\nYou chose to rent " + rentalCar.cars[1].model)
-            rentalCar.carsRented.push (rentalCar.cars[1])
+            rentalCar.carsRented.push(rentalCar.cars.shift(rentalCar.cars[1]))
             totalCost()
         } else if (answer == 3) {
             console.log("_________________________________________\nYou chose to rent " + rentalCar.cars[2].model)
-            rentalCar.carsRented.push (rentalCar.cars[2])
+            rentalCar.carsRented.push(rentalCar.cars.shift(rentalCar.cars[2]))
             totalCost()
         } else {
             console.log("_________________________________________\nInvalid choice")
@@ -82,6 +83,7 @@ function carChoice() {
         }
     })
 }
+
 
 function totalCost() { 
     const selection = rl.question ("How many days would you like to rent?\n=> ", (answer) => {
@@ -110,7 +112,7 @@ function returnScreen() {
             console.log("incorrect selection try again")
             mainMenu()
         } else {
-            rentalCar.carsRented.splice(answer - 1, 1)
+            rentalCar.cars.push(rentalCar.carsRented.shift(rentalCar.carsRented[parseInt(answer)]))
             mainMenu()
         }
     })
